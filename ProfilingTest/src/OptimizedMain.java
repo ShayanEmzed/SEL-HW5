@@ -2,7 +2,7 @@ import java.util.*;
 
 public class OptimizedMain {
     public static void main(String[] args) {
-        ArrayList<String> input = generateRandomStrings(100000, 2);
+        ArrayList<String> input = generateRandomStrings(1000000, 2);
     //        ArrayList<String> input = manualInit();
         int numberOfRepeated = 0;
         while (true) {
