@@ -1,32 +1,41 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class NaiveMain {
     public static void main(String[] args) {
-        ArrayList<String> input = generateRandomStrings(100000, 5);
+        ArrayList<String> input = generateRandomStrings(100000, 2);
 //        ArrayList<String> input = manualInit();
-        ArrayList<String> printed = new ArrayList<>();
-        for (int i = 0; i < input.size(); i++) {
-            int cnt = 0;
-            for (String value : input) {
-                if (input.get(i).equals(value)) {
-                    cnt += 1;
-                }
-            }
-            if (cnt > 1) {
-                boolean flag = true;
-                for (String s : printed) {
-                    if (s.equals(input.get(i))) {
-                        flag = false;
+        int numberOfRepeated = 0;
+        while (true) {
+            String repeatedStr = "";
+            for (String s : input) {
+                int cnt = 0;
+                for (String str : input) {
+                    if (s.equals(str)) {
+                        cnt += 1;
                     }
                 }
-                if (flag) {
-                    System.out.println(input.get(i));
-                    printed.add(input.get(i));
+                if (cnt > 1) {
+                    repeatedStr = s;
+                    break;
                 }
             }
+            if (repeatedStr.equals("")) {
+                break;
+            } else {
+                System.out.println(repeatedStr);
+                numberOfRepeated += 1;
+                ArrayList<String> newInput = new ArrayList<>();
+                for (String str : input) {
+                    if (!str.equals(repeatedStr)) {
+                        newInput.add(str);
+                    }
+                }
+                input = newInput;
+            }
         }
-        System.out.println("\nNumber of repeated strings: " + printed.size());
+        System.out.println("\nNumber of repeated strings: " + numberOfRepeated);
     }
 
     public static ArrayList<String> manualInit() {
