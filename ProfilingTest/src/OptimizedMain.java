@@ -2,24 +2,38 @@ import java.util.*;
 
 public class OptimizedMain {
     public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Press any key to start ...");
-//        scanner.nextLine();
-        ArrayList<String> input = generateRandomStrings(10000000, 5);
-//        ArrayList<String> input = manualInit();
-        HashMap<String, Integer> dict = new HashMap<>();
-        HashMap<String, Integer> printed = new HashMap<>();
-        for (String s : input) {
-            if (dict.containsKey(s)) {
-                if (!printed.containsKey(s)) {
-                    printed.put(s, 1);
-                    System.out.println(s);
+        ArrayList<String> input = generateRandomStrings(100000, 2);
+    //        ArrayList<String> input = manualInit();
+        int numberOfRepeated = 0;
+        while (true) {
+            String repeatedStr = "";
+            for (String s : input) {
+                int cnt = 0;
+                for (String str : input) {
+                    if (s.equals(str)) {
+                        cnt += 1;
+                        if (cnt > 1) {
+                            repeatedStr = s;
+                            break;
+                        }
+                    }
                 }
+            }
+            if (repeatedStr.equals("")) {
+                break;
             } else {
-                dict.put(s, 1);
+                System.out.println(repeatedStr);
+                numberOfRepeated += 1;
+                Iterator<String> iterator = input.iterator();
+                while (iterator.hasNext()) {
+                    String nextString = iterator.next();
+                    if (nextString.equals(repeatedStr)) {
+                        iterator.remove();
+                    }
+                }
             }
         }
-        System.out.println("\nNumber of repeated strings: " + printed.size());
+        System.out.println("\nNumber of repeated strings: " + numberOfRepeated);
     }
 
     public static ArrayList<String> manualInit() {
